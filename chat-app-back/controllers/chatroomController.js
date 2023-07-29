@@ -2,6 +2,7 @@ import { ChatRoomModel } from '../models/ChatRoom.js';
 
 export const createChatroom = async (req,res) =>{
     const {name } = req.body;
+    console.log("from create chat room")
     try{
         if(!name){
             throw "chat room name is required"
@@ -14,7 +15,7 @@ export const createChatroom = async (req,res) =>{
     
         const chatroom = new ChatRoomModel({name});
         await chatroom.save();
-        return res.status(200).send({message:`chatroom ${chatroom.name} successfully created`});
+        return res.status(200).send({message:`chatroom successfully created`})
     }catch(e){
         return e;
     }

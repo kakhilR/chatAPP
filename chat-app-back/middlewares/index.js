@@ -15,7 +15,7 @@ export const GenerateSecretToken = async (payload) => {
 const ValidateSecretToken = async (req)=>{
     try{
         const token = req.get("Authorization");
-        // console.log(token);
+        console.log(token,"from middle ware");
         const payload = await jwt.verify(token.split(" ")[1], process.env.secret_key);
         req.user = payload;
         return true;
