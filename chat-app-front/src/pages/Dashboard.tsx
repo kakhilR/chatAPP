@@ -2,27 +2,36 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { toast, TypeOptions } from 'react-toastify';
+
 interface DashboardProps{
     [key:string]: any;
 }
-console.log("Bearer "+localStorage.getItem('token'))
+
 const Dashboard: React.FC<DashboardProps> = (props)=>{
-    // const createChatroomRef:any = createRef();
-    // const name = createChatroomRef.current.value;
+    const createChatroomRef:any = React.createRef();
     
     const [chatrooms,setChatrooms] = useState([]);
 
+    const notify = (text: string, type: TypeOptions) =>
+    toast(text, {
+      type,
+    });
+
+    console.log("Bearer "+localStorage.getItem('token')," token")
     const saveChatroom = ()=>{
+        const name = createChatroomRef.current.value;
         axios.post('http://localhost:8000/api/create-chat-room',{
             headers: {
-                'Content-Type': 'application/json',
                 Authorization: "Bearer "+localStorage.getItem('token'),
             },
             name
         }).then((res)=>{
             if(res.data.message==='chatroom successfully created'){
-                // getChatrooms();
+                getChatrooms();
+                notify("chatrooms successfully created",res.data.message)
             }else{
+                
                 window.alert('Error creating chatroom')
             }
         }).catch(e=>{
@@ -38,7 +47,8 @@ const Dashboard: React.FC<DashboardProps> = (props)=>{
         }).then((res)=>{
             setChatrooms(res.data);
         }).catch(err=>{
-            setTimeout(getChatrooms,3000);
+            console.log(err);
+            // setTimeout(getChatrooms,3000);
         })
     }
 
@@ -52,7 +62,7 @@ const Dashboard: React.FC<DashboardProps> = (props)=>{
     <div className="cardBody">
         <div className="inputGroup">
         <label htmlFor="name">Name</label>
-            <input type="text" name="chatroom" id="chatroom" placeholder="enter chat room name"/>
+            <input type="text" name="name" id="name" placeholder="enter chat room name" ref={createChatroomRef}/>
         </div>
         <button onClick={saveChatroom}>Create Chatroom</button>
         <div className="chatrooms">
@@ -60,7 +70,7 @@ const Dashboard: React.FC<DashboardProps> = (props)=>{
                 return (<div key={chatroom._id} className="chatroom">
                     <div>{chatroom.name}</div>
                     <Link to={"/chat-room/"+chatroom._id}>
-                    <div className="join">Join</div>
+                    <div className="join" >Join</div>
                     </Link>
                 </div>)
             }) :null}

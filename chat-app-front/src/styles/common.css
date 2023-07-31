@@ -23,11 +23,10 @@ body {
 }
 
 .cardHeader {
-  background: #f7c52a;
   padding: 0.75rem 1.5rem;
   border-radius: 2px;
   text-transform: uppercase;
-  transform: skewY(-4deg);
+  /* transform: skewY(-4deg); */
   font-size: 1.1rem;
   font-weight: bold;
   display: inline-block;

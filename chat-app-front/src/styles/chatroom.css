@@ -10,7 +10,7 @@
   .chatroomSection {
     width: 40vw;
     height: 80vh;
-    margin: auto;
+    margin-top: -4rem;
     border: 1px solid #eee;
     position: relative;
   }
@@ -26,15 +26,18 @@
   }
   
   .chatroomActions {
+    width:40vw;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 30%;
     right: 0;
     padding: 0.5rem;
     display: grid;
     grid-template-columns: 1fr 72px;
     grid-gap: 1rem;
-    border-top: 1px solid #eee;
+    border-radius: 1px solid #0f0e0e;
   }
   
   .chatroomActions button {

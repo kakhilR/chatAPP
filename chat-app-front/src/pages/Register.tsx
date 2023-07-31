@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, TypeOptions } from 'react-toastify';
 
 interface RegisterProps {
     [key:string]: any;
@@ -11,24 +12,30 @@ const Register: React.FC<RegisterProps> = (props)=>{
     const emailRef:any = React.createRef();
     const passwordRef:any = React.createRef();
     const history = useNavigate ();
+    
     const saveUser=()=>{
         const name = nameRef.current.value;
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
+
+        const notify = (text: string, type: TypeOptions) => toast(text, {
+            position:'top-right',
+            type,
+        });
 
         axios.post('http://localhost:8000/api/register',{
             name, email, password
         }).then(res=>{
             console.log(res)
             if(res.data._message==='user validation failed'){
-                window.alert('please check all the fields and retry')
+                notify(res.data.message,"error")
             }else{
+                notify(res.data.message,"success")
                 history('/login')
-                window.alert(`message:${res.data.message}`);
             }
         }).catch(err=>{
             console.log(err)
-            window.alert(`errors:${err.data.errors}`);
+            notify(err.message,"success")
         })
     }
     return <div className="card">

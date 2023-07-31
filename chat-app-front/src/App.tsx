@@ -47,7 +47,6 @@ const App : React.FC<AppProps> = () => {
         <Route path='/register' element={<Register/>} />
         <Route path='/dashboard' element={<Dashboard socket={socket}/>} />
         <Route path='/chat-room/:id' element={<Chatroom socket={socket}/>} />
-
       </Routes>
     </BrowserRouter>
   );

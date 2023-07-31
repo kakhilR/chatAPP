@@ -1,7 +1,7 @@
 import { ChatRoomModel } from '../models/ChatRoom.js';
 
 export const createChatroom = async (req,res) =>{
-    const {name } = req.body;
+    const { name } = req.body;
     console.log("from create chat room")
     try{
         if(!name){
